@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+    python:
+        build:
+            dockerfile: ./Dockerfile
+            context: .
+        image: pythao_compose
+        container_name: python
+        ports: 
+            - "5000:5000"
+        networks: 
+            - network-do-papi 
+        depends_on: 
+            - "postgres"
+
+    postgres:
+        image: postgres
+        container_name: postgres_teste
+        networks: 
+            - network-do-papi 
+        ports: 
+            - "5432:5432"
+        environment:
+            POSTGRES_DB: 'chamadosdp'
+            POSTGRES_PASSWORD: 'postgres'
+            
+networks:
+    network-do-papi:
+        driver: bridge
