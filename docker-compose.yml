@@ -1,6 +1,18 @@
 version: '3'
 
 services:
+    postgres:
+        image: postgres:9.6.5
+        container_name: conectadp2
+        networks: 
+            - network-do-papi 
+        ports: 
+            - "5432:5432"
+        environment:
+            POSTGRES_DB: 'postgres'
+            POSTGRES_USER: 'postgres'
+            POSTGRES_PASSWORD: 'postgres'
+
     python:
         build:
             dockerfile: ./Dockerfile
@@ -13,17 +25,6 @@ services:
             - network-do-papi 
         depends_on: 
             - "postgres"
-
-    postgres:
-        image: postgres
-        container_name: postgres_teste
-        networks: 
-            - network-do-papi 
-        ports: 
-            - "5432:5432"
-        environment:
-            POSTGRES_DB: 'chamadosdp'
-            POSTGRES_PASSWORD: 'postgres'
             
 networks:
     network-do-papi:
